@@ -1,5 +1,5 @@
 import { BigNumber } from "bignumber.js";
-import { Product } from "../product/product";
+import { Product } from "../product";
 
 export type LineItemOpts = {
   product: Product;

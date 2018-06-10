@@ -1,5 +1,5 @@
 import { BigNumber } from "bignumber.js";
-import { Product } from "../product/product";
+import { Product } from "../product";
 import { LineItem } from "./line-item";
 
 describe("LineItem", () => {
