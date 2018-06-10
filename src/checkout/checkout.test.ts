@@ -95,7 +95,18 @@ describe("Checkout", () => {
       const atv = new Product({ ...atvDefaults, price: new BigNumber("109.50") });
 
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [atv.sku],
+          name: "Three apple tvs for the price of two",
+          prerequisites: [
+            (lineItems) => {
+              const atvLineItem = lineItems.get(atv.sku);
+              return !!atvLineItem && atvLineItem.quantity >= 3;
+            },
+          ],
+          value: new BigNumber("-109.50"),
+          valueType: "fixed_offset",
+        }),
       ];
 
       checkout = new Checkout(priceRules);
@@ -109,7 +120,18 @@ describe("Checkout", () => {
       const atv = new Product({ ...atvDefaults, price: new BigNumber("109.50") });
 
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [atv.sku],
+          name: "Three apple tvs for the price of two",
+          prerequisites: [
+            (lineItems) => {
+              const atvLineItem = lineItems.get(atv.sku);
+              return !!atvLineItem && atvLineItem.quantity >= 3;
+            },
+          ],
+          value: new BigNumber("-109.50"),
+          valueType: "fixed_offset",
+        }),
       ];
 
       checkout = new Checkout(priceRules);
@@ -123,7 +145,18 @@ describe("Checkout", () => {
     it("does not return a bulk discount price when the quantity has not been met", () => {
       const ipd = new Product({ ...ipdDefaults, price: new BigNumber("549.99") });
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [ipd.sku],
+          name: "Price drop for iPad when you buy more than four",
+          prerequisites: [
+            (lineItems) => {
+              const ipdLineItem = lineItems.get(ipd.sku);
+              return !!ipdLineItem && ipdLineItem.quantity > 4;
+            },
+          ],
+          value: new BigNumber("499.99"),
+          valueType: "fixed_price",
+        }),
       ];
 
       checkout = new Checkout(priceRules);
@@ -138,7 +171,18 @@ describe("Checkout", () => {
     it("returns a bulk discount price when the quantity has been met", () => {
       const ipd = new Product({ ...ipdDefaults, price: new BigNumber("549.99") });
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [ipd.sku],
+          name: "Price drop for iPad when you buy more than four",
+          prerequisites: [
+            (lineItems) => {
+              const ipdLineItem = lineItems.get(ipd.sku);
+              return !!ipdLineItem && ipdLineItem.quantity > 4;
+            },
+          ],
+          value: new BigNumber("499.99"),
+          valueType: "fixed_price",
+        }),
       ];
 
       checkout = new Checkout(priceRules);
@@ -156,7 +200,15 @@ describe("Checkout", () => {
       const vga = new Product({ ...vgaDefaults, price: new BigNumber("30.00") });
 
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [vga.sku],
+          name: "Free VGA adapter with MacBook Pro purchase",
+          prerequisites: [
+            (lineItems) => !!lineItems.get(mbp.sku),
+          ],
+          value: new BigNumber("0"),
+          valueType: "fixed_price",
+        }),
       ];
 
       checkout = new Checkout(priceRules);
@@ -171,7 +223,15 @@ describe("Checkout", () => {
       const vga = new Product({ ...vgaDefaults, price: new BigNumber("30.00") });
 
       const priceRules = [
-        new PriceRule(),
+        new PriceRule({
+          entitledSkus: [vga.sku],
+          name: "Free VGA adapter with every MacBook Pro purchase",
+          prerequisites: [
+            (lineItems) => !!lineItems.get(mbp.sku),
+          ],
+          value: new BigNumber("0"),
+          valueType: "fixed_price",
+        }),
       ];
 
       checkout = new Checkout(priceRules);

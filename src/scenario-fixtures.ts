@@ -1,6 +1,7 @@
 import { BigNumber } from "bignumber.js";
-import { Checkout, PriceRule } from "./checkout";
-import { Product } from "./product";
+import { Checkout } from "./checkout/checkout";
+import { PriceRule } from "./checkout/price-rule";
+import { Product } from "./product/product";
 import { Scenario } from "./scenario";
 
 const ipd = new Product({
@@ -27,7 +28,41 @@ const vga = new Product({
   sku: "vga",
 });
 
-const priceRules: PriceRule[] = [];
+const priceRules: PriceRule[] = [
+  new PriceRule({
+    entitledSkus: [atv.sku],
+    name: "Three apple tvs for the price of two",
+    prerequisites: [
+      (lineItems) => {
+        const atvLineItem = lineItems.get(atv.sku);
+        return !!atvLineItem && atvLineItem.quantity >= 3;
+      },
+    ],
+    value: new BigNumber("-109.50"),
+    valueType: "fixed_offset",
+  }),
+  new PriceRule({
+    entitledSkus: [ipd.sku],
+    name: "Price drop for iPad when you buy more than four",
+    prerequisites: [
+      (lineItems) => {
+        const ipdLineItem = lineItems.get(ipd.sku);
+        return !!ipdLineItem && ipdLineItem.quantity > 4;
+      },
+    ],
+    value: new BigNumber("499.99"),
+    valueType: "fixed_price",
+  }),
+  new PriceRule({
+    entitledSkus: [vga.sku],
+    name: "Free VGA adapter with every MacBook Pro purchase",
+    prerequisites: [
+      (lineItems) => !!lineItems.get(mbp.sku),
+    ],
+    value: new BigNumber("0"),
+    valueType: "fixed_price",
+  }),
+];
 
 export const scenarios = [
   new Scenario({
