@@ -1,0 +1,36 @@
+{
+  "name": "shopping-checkout",
+  "version": "1.0.0",
+  "description": "shopping checkout",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MonicaOlejniczak/shopping-checkout"
+  },
+  "license": "ISC",
+  "author": "Monica Olejniczak",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --exec ts-node -- ./src/app.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "tslint": "tslint 'src/**/*.ts'",
+    "tslint:fix": "tslint --fix 'src/**/*.ts'"
+  },
+  "dependencies": {
+    "@types/node": "^10.3.2",
+    "bignumber.js": "^7.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.0.0",
+    "jest": "^23.1.0",
+    "nodemon": "^1.17.5",
+    "ts-jest": "^22.4.6",
+    "ts-node": "^6.1.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1"
+  },
+  "engines": {
+    "node": "^8.9.4"
+  }
+}

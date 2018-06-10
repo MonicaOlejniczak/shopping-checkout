@@ -1,0 +1,11 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest"
+  ],
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "interface-over-type-literal": false
+  },
+  "rulesDirectory": []
+}
